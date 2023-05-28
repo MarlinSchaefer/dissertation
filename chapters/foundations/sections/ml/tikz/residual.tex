@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+	\pgfmathsetmacro{\vertsep}{0.6}
+	\pgfmathsetmacro{\bvmargin}{0.2}
+    \pgfmathsetmacro{\bhmargin}{0.4}
+	\node (in) {$x$};
+	\node[draw, minimum width=1cm, below=\vertsep cm of in] (l1) {Layer 1};
+	\node[draw, minimum width=1cm, below=\vertsep cm of l1] (l2) {Layer 2};
+	\node[draw, circle, below=\vertsep cm of l2] (plus) {$+$};
+	
+	\draw[red, dashed] ($(l1.north west)+(-\bhmargin, \bvmargin)$) rectangle ($(l2.south east)+(\bhmargin, -\bvmargin)$);
+	\node at ($(l1.north west)!0.5!(l2.south east)+(-1.7, 0)$) {$F(x)$};
+    \node at ($(l1.north west)!0.5!(l2.south east)+(0.55, 0)$) {\acrshort{relu}};
+
+    \node[below=\vertsep cm of plus] (H) {$H(x)=F(x)+x$};
+    \node at ($(plus.south)!0.5!(H.north)+(0.55, 0)$) {\acrshort{relu}};
+
+    \draw[->] ($(in)!0.5!(l1.north)$) |- ++(1.6, 0) |- (plus.east);
+	
+	\draw[->] (in) -- (l1.north);
+	\draw[->] (l1.south) -- (l2.north);
+	\draw[->] (l2.south) -- (plus.north);
+    \draw[->] (plus.south) -- (H.north);
+\end{tikzpicture}

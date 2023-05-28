@@ -1,0 +1,14 @@
+\begin{tikzpicture}
+\node[draw, circle, minimum size=0.75cm] (neuron) {};
+\node (z) [below=0.1cm of neuron] {$z = \vec{w}\cdot\vec{x}+b$};
+\node (x_1) [left=1.5cm of neuron] {$x_1$};
+\node (x_0) [above=0.5cm of x_1] {$x_0$};
+\node (x_2) [below=0.5cm of x_1] {$x_2$};
+\node (a) [right=1.5cm of neuron] {$a\lr{z}$};
+
+\draw[->, shorten >= 2pt] (x_0) -- (neuron) node[midway, above] {$w_0$};
+\draw[->, shorten >= 2pt] (x_1) -- (neuron) node[midway, above] {$w_1$};
+\draw[->, shorten >= 2pt] (x_2) -- (neuron) node[midway, above] {$w_2$};
+
+\draw[->, shorten >= 2pt] (neuron) -- (a);
+\end{tikzpicture}

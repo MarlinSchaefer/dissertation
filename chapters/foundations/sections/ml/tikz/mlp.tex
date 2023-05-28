@@ -1,0 +1,70 @@
+\begin{tikzpicture}[
+neuron/.style={minimum size=0.75cm, circle, draw},
+heavyside/.style={path picture={
+	\pgfpointdiff{\pgfpointanchor{path picture bounding box}{north east}}%
+        {\pgfpointanchor{path picture bounding box}{south west}}
+      \pgfgetlastxy\x\y
+      % Scale the x and y vectors so that the range
+      % -1 to 1 is slightly shorter than the size of the node
+      \tikzset{x=\x*.25, y=\y*.25}
+	\draw (-1,-1) -- (0, -1) -- (0, 1) -- (1, 1);
+}}
+]
+\begin{scope}[on grid,node distance=0.5cm]
+	% PERCEPTRON
+	% Inputs of Perceptron
+	\node (x_0) {$x_0$};
+	\node (x_1) [below=1cm of x_0] {$x_1$};
+	
+	% Nodes of Perceptron
+	\node[neuron, heavyside] (mlp10) [above right=0.5cm and 1.5cm of x_0] {};
+	\node[neuron, heavyside] (mlp11) [below right=0.5cm and 1.5cm of x_0] {};
+	\node[neuron, heavyside] (mlp12) [below right=0.5cm and 1.5cm of x_1] {};
+	
+	% Connections of Perceptron
+	\draw[->, shorten >= 2pt] (x_0.east) -- (mlp10);
+	\draw[->, shorten >= 2pt] (x_0.east) -- (mlp11);
+	\draw[->, shorten >= 2pt] (x_0.east) -- (mlp12);
+	
+	\draw[->, shorten >= 2pt] (x_1.east) -- (mlp10);
+	\draw[->, shorten >= 2pt] (x_1.east) -- (mlp11);
+	\draw[->, shorten >= 2pt] (x_1.east) -- (mlp12);
+	
+	
+	% Splitting figure
+	\node (a) [above left=0.5cm and 0.5cm of x_0] {(a)};
+
+	\node (ht) [above right=0.25cm and 1cm of mlp10] {};
+	\node (hb) [below right=0.25cm and 1cm of mlp12] {};
+	
+	%\draw[] (ht) -- (hb);
+	
+	\node (helper1) [right=1cm of ht] {};
+	\node (b) at (a -| helper1) {(b)};
+	
+	
+	% MLP
+	% Inputs of MLP
+	\node (helper2) [right=0.5cm of b] {};
+	\node (x_0m) at (x_0 -| helper2) {$x_0$};
+	\node (x_1m) [below=1cm of x_0m] {$x_1$};
+	
+	% MLP layer 1
+	\node[neuron, heavyside] (mlp210) [right=1.5cm of x_0m] {};
+	\node[neuron, heavyside] (mlp211) [right=1.5cm of x_1m] {};
+	
+	% MLP layer 2
+	\node[neuron, heavyside] (mlp220) [below right=0.5cm and 1.5cm of mlp210] {};
+	
+	%Connections of MLP
+	\draw[->, shorten >= 2pt] (x_0m.east) -- (mlp210);
+	\draw[->, shorten >= 2pt] (x_0m.east) -- (mlp211);
+	
+	\draw[->, shorten >= 2pt] (x_1m.east) -- (mlp210);
+	\draw[->, shorten >= 2pt] (x_1m.east) -- (mlp211);
+	
+	\draw[->, shorten >= 2pt] (mlp210.east) -- (mlp220);
+	
+	\draw[->, shorten >= 2pt] (mlp211.east) -- (mlp220);
+\end{scope}
+\end{tikzpicture}

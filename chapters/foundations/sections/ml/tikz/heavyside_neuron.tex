@@ -1,0 +1,28 @@
+\begin{tikzpicture}[
+neuron/.style={minimum size=0.75cm, circle, draw},
+heavyside/.style={path picture={
+	\pgfpointdiff{\pgfpointanchor{path picture bounding box}{north east}}%
+        {\pgfpointanchor{path picture bounding box}{south west}}
+      \pgfgetlastxy\x\y
+      % Scale the x and y vectors so that the range
+      % -1 to 1 is slightly shorter than the size of the node
+      \tikzset{x=\x*.25, y=\y*.25}
+	\draw (-1,-1) -- (0, -1) -- (0, 1) -- (1, 1);
+}}
+]
+
+\node[neuron, heavyside] (n) {};
+
+\node (z) [below=0.1cm of n] {$z = \vec{w}\cdot\vec{x}+b$};
+\node (x_1) [left=1.5cm of n] {$x_1$};
+\node (x_0) [above=0.5cm of x_1] {$x_0$};
+\node (x_2) [below=0.5cm of x_1] {$x_2$};
+\node (a) [right=1.5cm of n] {$H\lr{z}$};
+
+\draw[->, shorten >= 2pt] (x_0) -- (n) node[midway, above] {$w_0$};
+\draw[->, shorten >= 2pt] (x_1) -- (n) node[midway, above] {$w_1$};
+\draw[->, shorten >= 2pt] (x_2) -- (n) node[midway, above] {$w_2$};
+
+\draw[->, shorten >= 2pt] (n) -- (a);
+
+\end{tikzpicture}

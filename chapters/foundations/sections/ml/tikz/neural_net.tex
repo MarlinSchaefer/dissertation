@@ -1,0 +1,108 @@
+\begin{tikzpicture}[
+	neuron/.style={draw, circle, minimum size=1cm},
+	inp/.style={fill=blue, fill opacity=0.4, draw=blue, draw opacity=0.7},
+	hid/.style={fill=Emerald, fill opacity=0.4, draw=Emerald, draw opacity=0.7},
+	ops/.style={fill=red, fill opacity=0.4, draw=red, draw opacity=0.7},
+	conn/.style={->, shorten >= 4pt}
+]
+% Input layer
+\node[neuron, inp] (i0) {};
+\node[neuron, inp] (i1) [below=0.5cm of i0] {};
+\node[neuron, inp] (i2) [below=0.5cm of i1] {};
+
+% Hidden layers
+\node[neuron, hid] (h3) [right=1.5cm of i1] {};
+\node[neuron, hid] (h2) [above=0.5cm of h3] {};
+\node[neuron, hid] (h1) [above=0.5cm of h2] {};
+\node[neuron, hid] (h4) [below=0.5cm of h3] {};
+\node[neuron, hid] (h5) [below=0.5cm of h4] {};
+
+\node[neuron, hid] (h12) [right=1.5cm of h1] {};
+\node[neuron, hid] (h22) [right=1.5cm of h2] {};
+\node[neuron, hid] (h32) [right=1.5cm of h3] {};
+\node[neuron, hid] (h42) [right=1.5cm of h4] {};
+\node[neuron, hid] (h52) [right=1.5cm of h5] {};
+
+% Output layer
+\node[neuron, ops] (o1) [right=1.5cm of h32] {};
+
+%Labels
+\node (x0) [left=1cm of i0] {$x_1$};
+\node (x1) [left=1cm of i1] {$x_2$};
+\node (x2) [left=1cm of i2] {$x_3$};
+
+\node (out1) [right=1cm of o1] {$o_1$};
+
+\node (helper1) [above=0.5cm of h1] {};
+
+\node (inplay) at (i0 |- helper1) {Input layer};
+\node (outlay) at (o1 |- helper1) {Output layer};
+\path (inplay) -- (outlay) node[midway] (hidlay) {Hidden layers};
+
+
+% Connections
+% Input to hidden layer 1
+\draw[conn] (i0) -- (h1);
+\draw[conn] (i0) -- (h2);
+\draw[conn] (i0) -- (h3);
+\draw[conn] (i0) -- (h4);
+\draw[conn] (i0) -- (h5);
+
+\draw[conn] (i1) -- (h1);
+\draw[conn] (i1) -- (h2);
+\draw[conn] (i1) -- (h3);
+\draw[conn] (i1) -- (h4);
+\draw[conn] (i1) -- (h5);
+
+\draw[conn] (i2) -- (h1);
+\draw[conn] (i2) -- (h2);
+\draw[conn] (i2) -- (h3);
+\draw[conn] (i2) -- (h4);
+\draw[conn] (i2) -- (h5);
+
+% Hidden layer 1 to hidden layer 2
+\draw[conn] (h1) -- (h12);
+\draw[conn] (h1) -- (h22);
+\draw[conn] (h1) -- (h32);
+\draw[conn] (h1) -- (h42);
+\draw[conn] (h1) -- (h52);
+
+\draw[conn] (h2) -- (h12);
+\draw[conn] (h2) -- (h22);
+\draw[conn] (h2) -- (h32);
+\draw[conn] (h2) -- (h42);
+\draw[conn] (h2) -- (h52);
+
+\draw[conn] (h3) -- (h12);
+\draw[conn] (h3) -- (h22);
+\draw[conn] (h3) -- (h32);
+\draw[conn] (h3) -- (h42);
+\draw[conn] (h3) -- (h52);
+
+\draw[conn] (h4) -- (h12);
+\draw[conn] (h4) -- (h22);
+\draw[conn] (h4) -- (h32);
+\draw[conn] (h4) -- (h42);
+\draw[conn] (h4) -- (h52);
+
+\draw[conn] (h5) -- (h12);
+\draw[conn] (h5) -- (h22);
+\draw[conn] (h5) -- (h32);
+\draw[conn] (h5) -- (h42);
+\draw[conn] (h5) -- (h52);
+
+% Hidden 2 to output
+\draw[conn] (h12) -- (o1);
+\draw[conn] (h22) -- (o1);
+\draw[conn] (h32) -- (o1);
+\draw[conn] (h42) -- (o1);
+\draw[conn] (h52) -- (o1);
+
+% Labels to input
+\draw[conn] (x0) -- (i0);
+\draw[conn] (x1) -- (i1);
+\draw[conn] (x2) -- (i2);
+
+% Output to label
+\draw[conn] (o1) -- (out1);
+\end{tikzpicture}

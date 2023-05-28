@@ -1,0 +1,69 @@
+\pgfdeclarelayer{bg}    % declare background layer
+\pgfsetlayers{bg,main}  % set the order of the layers (main is the standard layer)
+\begin{tikzpicture}[square/.style={regular polygon,regular polygon sides=4, draw, minimum width=2.4cm, fill=white}]
+    \pgfmathsetmacro{\vsepa}{0.35}
+    \node (img1) {Img 1};
+    \node[below=2.4cm of img1] (img2) {Img 2};
+
+    \node[square, right=.8cm of img1] (bbs) {BB};
+    \node[square, right=.8cm of img2] (bbt) {BB};
+
+    \node[square, right=\vsepa cm of bbs] (fpns) {\acrshort{fpn}};
+    \node[square, right=\vsepa cm of bbt] (fpnt) {\acrshort{fpn}};
+
+    \node[square, right=\vsepa cm of fpns] (as) {Align};
+
+    \node[square, right=\vsepa cm of as] (projs) {Proj.};
+    \draw (fpnt -| projs) node[square] (projt) {Proj.};
+
+    \node[square, right=\vsepa cm of projs] (pred) {Pred.};
+
+    \coordinate (h1) at ($(projs)!0.5!(projt)$);
+    \node (contrast) at ($(h1 -| pred.east)+(.4, 0)$) {Contrast};
+
+    \draw[->] (img1.south) -- (img2.north);
+    \node[text width=2cm] at ($(img1.south)!0.5!(img2.north)+(1.2, 0)$) {Crop +\newline Resize};
+
+    \draw[->] (bbs.south) -- (bbt.north);
+    \node at ($(bbs.south)!0.5!(bbt.north)+(0.6, 0)$) {EMA};
+
+    \draw[->] (fpns.south) -- (fpnt.north);
+    \node at ($(fpns.south)!0.5!(fpnt.north)+(0.6, 0)$) {EMA};
+
+    \draw[->] (projs.south) -- (projt.north);
+    \node at ($(projs.south)!0.5!(projt.north)+(0.6, 0)$) {EMA};
+
+    \draw[->] (img1.east) -- (bbs.west);
+    \draw[->] (bbs.east) -- (fpns.west);
+    \draw[->] (fpns.east) -- (as.west);
+    \draw[->] (as.east) -- (projs.west);
+    \draw[->] (projs.east) -- (pred.west);
+    \draw[->] (pred.east) -| (contrast.north);
+
+    \draw[->] (img2.east) -- (bbt.west);
+    \draw[->] (bbt.east) -- (fpnt.west);
+    \draw[->] (fpnt.east) -- (projt.west);
+    \draw[->] (projt.east) -| (contrast.south);
+
+    \node (augs) at ($(img1.east)!0.5!(bbs.west)+(-0.1, 0.3)$) {Aug};
+    \node (augt) at ($(img2.east)!0.5!(bbt.west)+(-0.1, 0.3)$) {Aug};
+
+    \draw[->] (augs.north) -- ++(0, 1) -| (as.north);
+
+    \begin{pgfonlayer}{bg}    % select the background layer
+        \draw[rounded corners, dashed, red, fill=red, fill opacity=.2] ($(bbs.north west)+(-.1, .1)$) rectangle ($(pred.south east)+(.1, -.1)$);
+
+        \draw[rounded corners, dashed, blue, fill=blue, fill opacity=.2] ($(bbt.north west)+(-.1, .1)$) rectangle ($(projt.south east)+(.1, -.1)$);
+    \end{pgfonlayer}
+
+    \node[red] at ($(projs.north)+(.5, .5)$) {\textbf{Student}};
+    \node[blue] at ($(projt.south)+(-1.9, .3)$) {\textbf{Teacher}};
+
+    \node[minimum width=2.cm, right=\vsepa cm of projt] (sg) {
+        \begin{tikzpicture}[anchor=0]
+            \draw (-0.42, -.5) -- (.18, .5);
+            \draw (-.18, -.5) -- (.42, .5);
+        \end{tikzpicture}
+    };
+    \node at ($(sg.south)+(-.1, -.1)$) {stop-grad};
+\end{tikzpicture}

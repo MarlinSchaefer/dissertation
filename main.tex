@@ -1,0 +1,77 @@
+\documentclass[12pt, a4paper, usenames, dvipsnames]{book}
+%Compile using
+%pdflatex -synctex=1 -interaction=nonstopmode %.tex|biber %|makeglossaries %|pdflatex -synctex=1 -interaction=nonstopmode %.tex|pdflatex -synctex=1 -interaction=nonstopmode %.tex|evince %.pdf
+
+\input{inputs/includes}
+
+\pagestyle{fancy}
+
+\fancyhf{}
+\fancyhead[LE]{\leftmark}
+\fancyhead[RO]{\rightmark}
+\fancyfoot[LE]{\thepage}
+\fancyfoot[RO]{\thepage}
+
+\input{inputs/definitions}
+
+\addbibresource{bib/bibliography.bib}
+
+\author{Marlin Benedikt Schäfer}
+
+\begin{document}
+
+\dominitoc
+
+\input{inputs/acronym_definitions}
+
+\frontmatter
+
+\input{inputs/titlepage}
+
+\input{inputs/committee}
+
+\input{inputs/abstract}
+
+\tableofcontents
+\mtcaddchapter[Contents]
+
+\listoffigures
+\mtcaddchapter[List of Figures]
+
+\listoftables
+\mtcaddchapter[List of Tables]
+
+\input{inputs/acronyms}
+
+\mainmatter
+
+\include{chapters/introduction/main_introduction}
+
+\include{chapters/chapter_descriptions/main_descriptions}
+
+\include{chapters/foundations/foundations_main}
+
+\include{chapters/bnsnet/bnsnet_main}
+
+\include{chapters/forecasting/forecasting_main}
+
+\include{chapters/training_strats/training_strats_main}
+
+\include{chapters/cnn_coinc/cnn_coinc_main}
+
+\include{chapters/mdc/mdc_main}
+
+\include{chapters/internship/internship_main}
+
+\include{chapters/conclusions/conclusions_main}
+
+\printbibliography[heading=bibintoc]
+
+\appendix
+
+\input{inputs/acknowledgments}
+
+\input{inputs/publications}
+
+\input{inputs/cv}
+\end{document}
